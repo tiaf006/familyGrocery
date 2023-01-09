@@ -12,10 +12,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            let rootViewController = LogInViewController()
+            let rootViewController = UserStateViewController()
             let navigationController = UINavigationController(rootViewController: rootViewController)
             window.rootViewController = navigationController
             self.window = window
