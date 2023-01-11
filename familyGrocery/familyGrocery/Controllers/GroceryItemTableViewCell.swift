@@ -10,14 +10,16 @@ import UIKit
 class GroceryItemTableViewCell: UITableViewCell {
     let itemNameLable : UILabel = {
         let lbl = UILabel()
-        lbl.font = lbl.font.withSize(24)
+        lbl.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        lbl.textColor = .white
         lbl.numberOfLines = 2
         return lbl
     }()
     
      let addedByUserLable : UILabel = {
         let lbl = UILabel()
-        lbl.font = lbl.font.withSize(14)
+         lbl.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+         lbl.textColor = .white
         lbl.numberOfLines = 2
         return lbl
     }()
@@ -29,16 +31,6 @@ class GroceryItemTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        layOut()
-    }
-    
     
     private func layOut(){
         self.contentView.addSubview(itemNameLable)

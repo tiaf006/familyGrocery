@@ -12,6 +12,9 @@ import FirebaseAuth
 
 class GroceriesListViewController: UIViewController {
     var groceryItems = [GroceryItem]()
+    let currentUser = Auth.auth().currentUser
+    let ref = Database.database().reference(fromURL: "https://familygrocery-f098c-default-rtdb.firebaseio.com/")
+    
     // MARK: - UI elements
     private let tableView : UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -38,10 +41,12 @@ class GroceriesListViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(tableView)
         view.backgroundColor = .white
+        tableView.backgroundColor = UIColor(patternImage: UIImage(named: "griceryBackground")!)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus"), style: .plain, target: self, action: #selector(AddGroceryItem))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Online Users", style: .plain, target: self, action: #selector(goToOnlineUsers))
         
+        //tableView constraints
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = true
@@ -53,6 +58,7 @@ class GroceriesListViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
         tableView.reloadData()
         
+        //searchbar constrants
         searchController.loadViewIfNeeded()
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.enablesReturnKeyAutomatically = false
@@ -76,15 +82,11 @@ class GroceriesListViewController: UIViewController {
             
             if let groceryItem = itemTextField.text {
                 if groceryItem != "" {
-                    let currentUser = User()
-                    print("\n \n !!!!!!!!!!( \(String(describing: currentUser) )!!!!!!!!!!!!! \n \n")
-                
-                    let ref = Database.database().reference(fromURL: "https://familygrocery-f098c-default-rtdb.firebaseio.com/")
-                    let usersRef =  ref.child("grocery-items").child(groceryItem)
-                    let values: [String: Any] = ["item-name": groceryItem, "addedByUser": "Added By: \(String(describing: currentUser.userEmail))", "isCompleted": "\(false)"]
+                    let usersRef =  self.ref.child("grocery-items").child(groceryItem)
+                    let values: [String: Any] = ["item-name": groceryItem, "addedByUser": "Added By: \(String(describing: self.currentUser!.email!))", "isCompleted": "\(false)"]
                     usersRef.updateChildValues(values, withCompletionBlock: {(err, usersRef)in
                         if err != nil {
-                            print(err)
+                            print(err )
                             return
                         }
                         print("Save user successfully into Firebase db") }
@@ -132,6 +134,7 @@ extension GroceriesListViewController : UISearchBarDelegate, UITableViewDelegate
         let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath) as! GroceryItemTableViewCell
         cell.itemNameLable.text = groceryItems[indexPath.row].itemName
         cell.addedByUserLable.text = groceryItems[indexPath.row].addedByUser
+        cell.backgroundColor = .clear
         return cell
     }
     
@@ -148,9 +151,7 @@ extension GroceriesListViewController : UISearchBarDelegate, UITableViewDelegate
                 if let groceryItem = itemTextField.text {
                     if groceryItem != "" {
                         print(groceryItem)
-                        let ref = Database.database().reference(fromURL: "https://familygrocery-f098c-default-rtdb.firebaseio.com/")
-                        ref.child("grocery-items").updateChildValues([self.groceryItems[indexPath.row].itemName ?? "": groceryItem])
-                        ref.child("grocery-items").child(self.groceryItems[indexPath.row].itemName ?? "").updateChildValues(["item-name": groceryItem, "isCompleted":self.groceryItems[indexPath.row].isCompleated ?? false, "addedByUser": "Added By: \(Auth.auth().currentUser!.email!)"])
+                        self.ref.child("grocery-items").child(self.groceryItems[indexPath.row].itemName ?? "").updateChildValues(["item-name": groceryItem, "isCompleted":self.groceryItems[indexPath.row].isCompleated ?? false, "addedByUser": "Added By: \(Auth.auth().currentUser!.email!)"])
                         self.groceryItems[indexPath.row].itemName = groceryItem
                         self.groceryItems[indexPath.row].addedByUser = Auth.auth().currentUser!.email!
                         tableView.reloadData()
@@ -162,16 +163,15 @@ extension GroceriesListViewController : UISearchBarDelegate, UITableViewDelegate
             alert.addAction(cancleAction)
             self.present(alert, animated: true)
         }
-        edit.backgroundColor = .systemGreen
+        edit.backgroundColor = .systemMint
         
         let delete = UIContextualAction(style: .normal, title: "Delete") {(action, view, compeletionHandler) in
            print("delete")
-            let ref = Database.database().reference(fromURL: "https://familygrocery-f098c-default-rtdb.firebaseio.com/")
-            ref.child("grocery-items").child(self.groceryItems[indexPath.row].itemName ?? "").setValue(nil)
+            self.ref.child("grocery-items").child(self.groceryItems[indexPath.row].itemName ?? "").setValue(nil)
             self.groceryItems.remove(at: indexPath.row)
             tableView.reloadData()
         }
-        delete.backgroundColor = .red
+        delete.backgroundColor = .systemOrange
         
         let swip = UISwipeActionsConfiguration(actions: [edit, delete])
         return swip

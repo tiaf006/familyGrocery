@@ -25,6 +25,7 @@ class LogInViewController: UIViewController {
     
     private let logoImageView : UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "groceryLOGO")
         return imageView
     }()
     
@@ -69,6 +70,8 @@ class LogInViewController: UIViewController {
     private let registerLable : UILabel = {
         let lable =  UILabel()
         lable.text = "Don't Have An Account Yet?"
+        lable.textColor = .white
+        lable.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         return lable
     }()
     
@@ -169,7 +172,7 @@ class LogInViewController: UIViewController {
         private func layOut(){
             navigationItem.title = "Log In"
             navigationItem.hidesBackButton = true
-            view.backgroundColor = .white
+            view.backgroundColor = UIColor(patternImage: UIImage(named: "griceryBackground")!)
             
             //scrolView Constraints
             scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -178,7 +181,7 @@ class LogInViewController: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 4).isActive = true
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -4).isActive = true
             scrollView.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-            scrollView.contentSize = CGSize(width: view.frame.width, height: 600)
+            scrollView.contentSize = CGSize(width: view.frame.width, height: 700)
             scrollView.isScrollEnabled = true
             
             //contentView Constraints
@@ -194,8 +197,9 @@ class LogInViewController: UIViewController {
             logoImageView.translatesAutoresizingMaskIntoConstraints = false
             logoImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
             logoImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 24).isActive = true
-            logoImageView.RounedImage()
-            logoImageView.backgroundColor = .systemBrown
+            //logoImageView.RounedImage()
+            //logoImageView.backgroundColor = .systemBrown
+            
             //emailField Consteaints
             emailField.translatesAutoresizingMaskIntoConstraints =  false
             emailField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 44).isActive = true
@@ -222,6 +226,7 @@ class LogInViewController: UIViewController {
             goToRegisterButton.translatesAutoresizingMaskIntoConstraints = false
             registerLable.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 24).isActive = true
             registerLable.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24).isActive = true
+
             goToRegisterButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 24).isActive = true
             goToRegisterButton.leadingAnchor.constraint(equalTo: registerLable.trailingAnchor, constant: 8).isActive = true
             goToRegisterButton.heightAnchor.constraint(equalToConstant: 20).isActive = true

@@ -64,7 +64,6 @@ class RegisterViewController: UIViewController {
     private let registerButton : UIButton = {
         let button = UIButton()
         button.setTitle("Register", for: .normal)
-       // button.backgroundColor = UIColor(cgColor: CGColor(red: <#T##CGFloat#>, green: <#T##CGFloat#>, blue: <#T##CGFloat#>, alpha: <#T##CGFloat#>))
         button.backgroundColor = .systemBrown
         button.setTitleColor(.white, for: .normal)
         button.RounedButton()
@@ -140,7 +139,7 @@ class RegisterViewController: UIViewController {
     
     private func layOut(){
         navigationItem.title = "Register"
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(patternImage: UIImage(named: "griceryBackground")!)
         
         //scrolView Constraints
         scrollView.translatesAutoresizingMaskIntoConstraints = false
