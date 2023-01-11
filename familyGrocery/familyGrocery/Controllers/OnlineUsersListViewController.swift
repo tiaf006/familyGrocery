@@ -9,6 +9,8 @@ import UIKit
 import Firebase
 import FirebaseAuth
 
+// this controller with display all the online users in the database in a table view
+
 class OnlineUsersListViewController: UIViewController {
     var users = [User] ()
     let ref = Database.database().reference(fromURL: "https://familygrocery-f098c-default-rtdb.firebaseio.com/")
@@ -18,8 +20,6 @@ class OnlineUsersListViewController: UIViewController {
         let tableView = UITableView(frame: .zero)
         return tableView
     }()
-    
-    private  let searchController = UISearchController()
     
     //MARK: - app lifecycle
     override func viewDidLoad() {
@@ -32,6 +32,7 @@ class OnlineUsersListViewController: UIViewController {
     }
     
     // MARK: - actions
+    //get all online users from the database and add them to the table view users array
     func fetchUsers() {
         Database.database().reference().child("online-users").observe(.childAdded, with: { (snapshot) in
             if let dictionary = snapshot.value as? [String: String] {
@@ -46,6 +47,7 @@ class OnlineUsersListViewController: UIViewController {
     }
     
     // MARK: - Navigation
+    // once the user tapp on the logout button it they will be directed back to the login screen and their online user node will be deleted from the firebase until the log back in
     @objc private func goToLogin(){
         print("back to login")
         ref.child("online-users").child(Auth.auth().currentUser!.uid).setValue(nil)
@@ -74,27 +76,16 @@ class OnlineUsersListViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
         tableView.reloadData()
-        
-        //searchbar constraints
-        searchController.loadViewIfNeeded()
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.enablesReturnKeyAutomatically = false
-        searchController.searchBar.returnKeyType = UIReturnKeyType.done
-        searchController.searchBar.placeholder = "Search..."
-        definesPresentationContext = true
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.searchBar.delegate = self
     }
     
 }
 
 //MARK: - extentions
-extension OnlineUsersListViewController : UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+extension OnlineUsersListViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
-    
+    // using a prototyoe cell to display the users online
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel!.text = users[indexPath.row].userEmail!

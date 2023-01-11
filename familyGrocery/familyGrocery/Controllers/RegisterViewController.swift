@@ -85,6 +85,10 @@ class RegisterViewController: UIViewController {
     }
     
     // MARK: - actions
+    /*- this register func will check if the fields are not empty and if they are an error will pop up telling them to fill all the info and it will also chek if the info enterd are correct and if not an error will pop up saying the info invalid
+     if everething is correct then it will register a new account and take the user to the grocery list
+     - once the user is registered they will be added to the online users node as a user child node in the database
+     */
     @objc private func RegisterAction(){
         print("registered")
         let alert = UIAlertController(title: "Error!", message: "", preferredStyle: .alert)

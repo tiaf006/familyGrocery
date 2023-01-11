@@ -8,6 +8,7 @@
 import UIKit
 import FirebaseAuth
 import Firebase
+import FacebookLogin
 
 class LogInViewController: UIViewController {
     // MARK: - UI elements
@@ -82,15 +83,10 @@ class LogInViewController: UIViewController {
         button.addTarget(self, action: #selector(goToRegister), for: .touchUpInside)
         return button
     }()
-    
+    // face book login not working
     private let facebookLogin : UIButton = {
-        let button = UIButton()
-        button.setTitle("f  |  Or Log In With Facebook", for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 20, weight: .bold)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.RounedButton()
-        button.addTarget(self, action: #selector(facebookLoginAction), for: .touchUpInside)
+        let button = FBLoginButton()
+        button.permissions = ["public_profile", "email"]
         return button
     }()
     
@@ -105,6 +101,11 @@ class LogInViewController: UIViewController {
     }
     
     // MARK: - actions
+    /*- this login func will check if the fields are not empty and if they are an error will pop up telling them to fill all the info and it will also chek if the info enterd are correct and if not an erreo will pop up saying the info invalid
+     -then it will check if the user exsests on the authntication in the database
+     if so it will take them to the grocery list  and if not an error will pop up saying the user not exsiting
+     - once the user is sighned in they will be added to the online users node as a user child node in the database
+     */
     @objc private func LogInAction(){
         print("logged in")
         let alert = UIAlertController(title: "Error!", message: "", preferredStyle: .alert)
@@ -240,3 +241,20 @@ class LogInViewController: UIViewController {
             
         }
 }
+
+// MARK: - extentions
+/*extension LogInViewController : LoginButtonDelegate{
+    func loginButton(_ loginButton: FBLoginButton, didCompleteWith result: LoginManagerLoginResult?, error: Error?) {
+        let token = result?.token?.tokenString
+        let request = FBSDKLoginKit.GraphRequest(graphPath: "taif", parameters: ["fields": "email, name"], tokenString: token, version: nil, httpMethod: .get)
+        request.start(completionHandler: { connection, result, error in
+            print(result)
+        })
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+    }
+    
+    
+}
+*/
