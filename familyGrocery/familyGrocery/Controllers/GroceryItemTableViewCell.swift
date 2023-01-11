@@ -5,6 +5,7 @@
 //  Created by TAIF Al-zahrani on 16/06/1444 AH.
 //
 
+/* this class is for the gricery table view cell that will display the items and who added them */
 import UIKit
 
 class GroceryItemTableViewCell: UITableViewCell {

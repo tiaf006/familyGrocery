@@ -18,11 +18,10 @@ class GroceriesListViewController: UIViewController {
     // MARK: - UI elements
     private let tableView : UITableView = {
         let tableView = UITableView(frame: .zero)
+        // using the cell controller we created as grocery table view cell
         tableView.register(GroceryItemTableViewCell.self, forCellReuseIdentifier: "itemCell")
         return tableView
     }()
-    
-    private  let searchController = UISearchController()
     
     //MARK: - app lifecycle
     override func viewDidLoad() {
@@ -57,20 +56,14 @@ class GroceriesListViewController: UIViewController {
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16).isActive = true
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
         tableView.reloadData()
-        
-        //searchbar constrants
-        searchController.loadViewIfNeeded()
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.enablesReturnKeyAutomatically = false
-        searchController.searchBar.returnKeyType = UIReturnKeyType.done
-        searchController.searchBar.placeholder = "Search..."
-        definesPresentationContext = true
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        searchController.searchBar.delegate = self
     }
     
     // MARK: - actions
+    /*- display an alert for the user when they tap on the plus buttton
+     - the alert will contain a textfiled for the user to enter the item name thay want to add to the database and the table view
+     - when the user tap save that data base will create a new child node to the grocery-items node that contain the info of the new item that the user added
+     
+     */
     @objc private func AddGroceryItem(){
         print("add new item")
         let alert = UIAlertController(title: "Add new item", message: "", preferredStyle: .alert)
@@ -124,7 +117,7 @@ class GroceriesListViewController: UIViewController {
 }
 
 //MARK: - extentions
-extension GroceriesListViewController : UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
+extension GroceriesListViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableView.rowHeight = 80
       return  groceryItems.count
@@ -137,7 +130,10 @@ extension GroceriesListViewController : UISearchBarDelegate, UITableViewDelegate
         cell.backgroundColor = .clear
         return cell
     }
-    
+    /*- when the user swip the cell to left then 2 actions will appear
+     - the first one is the delet action that will delete the item node from the grosery-items node when tapped
+     - the second action is the edit action that will pop an alert with a text field for the user to enter the update that they want to perform on an exsiting item name and when save is tapped the item name will change in the database item node and on the table view as well
+     */
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let edit = UIContextualAction(style: .normal, title: "Edit") {(action, view, compeletionHandler) in
             print("edit")
