@@ -48,6 +48,10 @@
 		B17BEAD5296ADCD30047B8D3 /* Extentions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17BEAD4296ADCD30047B8D3 /* Extentions.swift */; };
 		B17BEAD8296C19760047B8D3 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17BEAD7296C19760047B8D3 /* Models.swift */; };
 		B17BEADA296C6FAF0047B8D3 /* GroceryItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B17BEAD9296C6FAF0047B8D3 /* GroceryItemTableViewCell.swift */; };
+		B17BEADD296EF0F50047B8D3 /* FacebookCore in Frameworks */ = {isa = PBXBuildFile; productRef = B17BEADC296EF0F50047B8D3 /* FacebookCore */; };
+		B17BEADF296EF0F50047B8D3 /* FacebookGamingServices in Frameworks */ = {isa = PBXBuildFile; productRef = B17BEADE296EF0F50047B8D3 /* FacebookGamingServices */; };
+		B17BEAE1296EF0F50047B8D3 /* FacebookLogin in Frameworks */ = {isa = PBXBuildFile; productRef = B17BEAE0296EF0F50047B8D3 /* FacebookLogin */; };
+		B17BEAE3296EF0F50047B8D3 /* FacebookShare in Frameworks */ = {isa = PBXBuildFile; productRef = B17BEAE2296EF0F50047B8D3 /* FacebookShare */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,9 +83,11 @@
 				B17BEAB7296AA80D0047B8D3 /* FirebaseFirestore in Frameworks */,
 				B17BEAA3296AA80C0047B8D3 /* FirebaseAnalyticsSwift in Frameworks */,
 				B17BEA9F296AA80C0047B8D3 /* FirebaseAnalytics in Frameworks */,
+				B17BEAE3296EF0F50047B8D3 /* FacebookShare in Frameworks */,
 				B17BEAA1296AA80C0047B8D3 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				B17BEAC7296AA80D0047B8D3 /* FirebaseMLModelDownloader in Frameworks */,
 				B17BEABB296AA80D0047B8D3 /* FirebaseFirestoreSwift in Frameworks */,
+				B17BEADF296EF0F50047B8D3 /* FacebookGamingServices in Frameworks */,
 				B17BEAA7296AA80C0047B8D3 /* FirebaseAppCheck in Frameworks */,
 				B17BEAA5296AA80C0047B8D3 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				B17BEAAB296AA80C0047B8D3 /* FirebaseAuth in Frameworks */,
@@ -93,10 +99,12 @@
 				B17BEAD3296AA80E0047B8D3 /* FirebaseStorageCombine-Community in Frameworks */,
 				B17BEACD296AA80D0047B8D3 /* FirebaseRemoteConfig in Frameworks */,
 				B17BEAA9296AA80C0047B8D3 /* FirebaseAppDistribution-Beta in Frameworks */,
+				B17BEAE1296EF0F50047B8D3 /* FacebookLogin in Frameworks */,
 				B17BEAAD296AA80C0047B8D3 /* FirebaseAuthCombine-Community in Frameworks */,
 				B17BEACB296AA80D0047B8D3 /* FirebasePerformance in Frameworks */,
 				B17BEAC3296AA80D0047B8D3 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 				B17BEAD1296AA80E0047B8D3 /* FirebaseStorage in Frameworks */,
+				B17BEADD296EF0F50047B8D3 /* FacebookCore in Frameworks */,
 				B17BEAB5296AA80C0047B8D3 /* FirebaseDynamicLinks in Frameworks */,
 				B17BEAB9296AA80D0047B8D3 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				B17BEAC9296AA80D0047B8D3 /* FirebaseMessaging in Frameworks */,
@@ -221,6 +229,10 @@
 				B17BEACE296AA80D0047B8D3 /* FirebaseRemoteConfigSwift */,
 				B17BEAD0296AA80E0047B8D3 /* FirebaseStorage */,
 				B17BEAD2296AA80E0047B8D3 /* FirebaseStorageCombine-Community */,
+				B17BEADC296EF0F50047B8D3 /* FacebookCore */,
+				B17BEADE296EF0F50047B8D3 /* FacebookGamingServices */,
+				B17BEAE0296EF0F50047B8D3 /* FacebookLogin */,
+				B17BEAE2296EF0F50047B8D3 /* FacebookShare */,
 			);
 			productName = familyGrocery;
 			productReference = B17BEA77296A9E630047B8D3 /* familyGrocery.app */;
@@ -252,6 +264,7 @@
 			mainGroup = B17BEA6E296A9E630047B8D3;
 			packageReferences = (
 				B17BEA9D296AA80C0047B8D3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				B17BEADB296EF0F50047B8D3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */,
 			);
 			productRefGroup = B17BEA78296A9E630047B8D3 /* Products */;
 			projectDirPath = "";
@@ -518,6 +531,14 @@
 				kind = branch;
 			};
 		};
+		B17BEADB296EF0F50047B8D3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/facebook/facebook-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -655,6 +676,26 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B17BEA9D296AA80C0047B8D3 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseStorageCombine-Community";
+		};
+		B17BEADC296EF0F50047B8D3 /* FacebookCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B17BEADB296EF0F50047B8D3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookCore;
+		};
+		B17BEADE296EF0F50047B8D3 /* FacebookGamingServices */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B17BEADB296EF0F50047B8D3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookGamingServices;
+		};
+		B17BEAE0296EF0F50047B8D3 /* FacebookLogin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B17BEADB296EF0F50047B8D3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookLogin;
+		};
+		B17BEAE2296EF0F50047B8D3 /* FacebookShare */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B17BEADB296EF0F50047B8D3 /* XCRemoteSwiftPackageReference "facebook-ios-sdk" */;
+			productName = FacebookShare;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -11,6 +11,8 @@ import FirebaseAuth
 
 class OnlineUsersListViewController: UIViewController {
     var users = [User] ()
+    let ref = Database.database().reference(fromURL: "https://familygrocery-f098c-default-rtdb.firebaseio.com/")
+
     // MARK: - UI elements
     private let tableView : UITableView = {
         let tableView = UITableView(frame: .zero)
@@ -29,7 +31,6 @@ class OnlineUsersListViewController: UIViewController {
         layOut()
     }
     
-    
     // MARK: - actions
     func fetchUsers() {
         Database.database().reference().child("online-users").observe(.childAdded, with: { (snapshot) in
@@ -40,7 +41,6 @@ class OnlineUsersListViewController: UIViewController {
                 user.userName = ""
                 self.users.append(user)
                 self.tableView.reloadData()
-                //print ("!!!!!!!\(String(describing: item.addedByUser )), \(String(describing: item.itemName))!!!!")
             }
         }, withCancel: nil)
     }
@@ -48,12 +48,9 @@ class OnlineUsersListViewController: UIViewController {
     // MARK: - Navigation
     @objc private func goToLogin(){
         print("back to login")
-        let ref = Database.database().reference(fromURL: "https://familygrocery-f098c-default-rtdb.firebaseio.com/")
         ref.child("online-users").child(Auth.auth().currentUser!.uid).setValue(nil)
         tableView.reloadData()
         try! Auth.auth().signOut()
-        //let loginVC = LogInViewController()
-       // navigationController?.pushViewController(loginVC, animated: true)
     }
     
     // MARK: - layout
@@ -62,9 +59,11 @@ class OnlineUsersListViewController: UIViewController {
         view.backgroundColor = .white
         view.addSubview(tableView)
         view.backgroundColor = .white
+        tableView.backgroundColor = UIColor(patternImage: UIImage(named: "griceryBackground")!)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(goToLogin))
         
+        //tableView constrants
         tableView.delegate = self
         tableView.dataSource = self
         tableView.allowsSelection = true
@@ -76,6 +75,7 @@ class OnlineUsersListViewController: UIViewController {
         tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16).isActive = true
         tableView.reloadData()
         
+        //searchbar constraints
         searchController.loadViewIfNeeded()
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.enablesReturnKeyAutomatically = false
@@ -98,6 +98,9 @@ extension OnlineUsersListViewController : UISearchBarDelegate, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel!.text = users[indexPath.row].userEmail!
+        cell.textLabel!.textColor = .white
+        cell.textLabel!.font = UIFont.systemFont(ofSize: 22, weight: .bold)
+        cell.backgroundColor = .clear
         return cell
     }
 }
